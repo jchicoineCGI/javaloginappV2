@@ -35,15 +35,11 @@ pipeline {
             }
         }
 
-        stage('Setting up OWASP ZAP docker container') {
+        stage('Starting up OWASP ZAP docker container') {
             steps {
                 script {
-                    /*echo "Pulling up last OWASP ZAP container --> Start"
-                    sh 'docker pull owasp/zap2docker-stable'
-                    echo "Pulling up last VMS container --> End"
                     echo "Starting container --> Start"
                     sh """
-                    */
                     docker run -dt --name owasp \
                     owasp/zap2docker-stable \
                     /bin/bash
@@ -100,7 +96,6 @@ pipeline {
                             -x report.xml \
                             -I
                         """
-                        //-x report-$(date +%d-%b-%Y).xml
                     }
                     else{
                         echo "Something went wrong..."
@@ -116,15 +111,6 @@ pipeline {
                     '''
                 }
             }
-        }
-    }
-    post {
-        always {
-            echo "Removing container"
-            sh '''
-                docker stop owasp
-                docker rm owasp
-            '''
         }
     }
 }
