@@ -69,7 +69,7 @@ pipeline {
                 script {
                     scan_type = "${params.SCAN_TYPE}"
                     echo "----> scan_type: $scan_type"
-                    target = "${params.TARGET}:8080"
+                    target = "${params.TARGET}"
                     if(scan_type == "Baseline"){
                         sh """
                             docker exec owasp \
