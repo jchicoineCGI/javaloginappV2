@@ -12,8 +12,8 @@ pipeline {
             description: 'Type of scan that is going to perform inside the container',
             name: 'SCAN_TYPE'
 
-        string defaultValue: "10.0.0.0",
-            description: 'Target IP to scan (Don\'t add the protocol or the port)',
+        string defaultValue: "http://10.0.0.0:8080",
+            description: 'Target IP to scan',
             name: 'TARGET'
 
         booleanParam defaultValue: true,
@@ -69,7 +69,7 @@ pipeline {
                 script {
                     scan_type = "${params.SCAN_TYPE}"
                     echo "----> scan_type: $scan_type"
-                    target = "https://${params.TARGET}:8080"
+                    target = "${params.TARGET}"
                     if(scan_type == "Baseline"){
                         sh """
                             docker exec owasp \
