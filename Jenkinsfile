@@ -69,7 +69,7 @@ pipeline {
                 script {
                     scan_type = "${params.SCAN_TYPE}"
                     echo "----> scan_type: $scan_type"
-                    target = "${params.TARGET}"
+                    target = "${params.TARGET}:8080"
                     if(scan_type == "Baseline"){
                         sh """
                             docker exec owasp \
@@ -111,6 +111,15 @@ pipeline {
                     '''
                 }
             }
+        }
+    }
+    post {
+        always {
+            echo "Removing container"
+            sh '''
+                docker stop owasp
+                docker rm owasp
+            '''
         }
     }
 }
